@@ -1,0 +1,280 @@
+@{
+    ViewData["Title"] = "Features";
+}
+
+<section class="is-title-bar">
+  <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+    <ul>
+      <li>Admin</li>
+      <li>Features</li>
+    </ul>
+    <a href="https://github.com/justboil/admin-one-tailwind" target="_blank" class="button blue">
+      <span class="icon"><i class="mdi mdi-github-circle"></i></span>
+      <span>GitHub</span>
+    </a>
+  </div>
+</section>
+
+<section class="is-hero-bar">
+  <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+    <h1 class="title">
+      Features Management
+    </h1>
+    <button class="button light">Add Feature</button>
+  </div>
+</section>
+
+<section class="section main-section">
+  <div class="card has-table">
+    <header class="card-header">
+      <p class="card-header-title">
+        <span class="icon"><i class="mdi mdi-cog"></i></span>
+        System Features
+      </p>
+      <a href="#" class="card-header-icon">
+        <span class="icon"><i class="mdi mdi-reload"></i></span>
+      </a>
+    </header>
+    <div class="card-content">
+      <table>
+        <thead>
+        <tr>
+          <th></th>
+          <th>Feature Name</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Category</th>
+          <th>Last Updated</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="image-cell">
+            <div class="image">
+              <span class="icon"><i class="mdi mdi-shield-check mdi-24px text-blue-500"></i></span>
+            </div>
+          </td>
+          <td data-label="Feature Name">
+            <a href="@Url.Action("Detail", "Features", new { featureName = "AdBlock" })" class="has-text-link">Ad Block</a>
+          </td>
+          <td data-label="Description">Block unwanted advertisements and tracking scripts</td>
+          <td data-label="Status">
+            <span class="tag green">Active</span>
+          </td>
+          <td data-label="Category">Security</td>
+          <td data-label="Last Updated">
+            <small class="text-gray-500" title="Jan 15, 2025">Jan 15, 2025</small>
+          </td>
+          <td class="actions-cell">
+            <div class="buttons right nowrap">
+              <a href="@Url.Action("Detail", "Features", new { featureName = "AdBlock" })" class="button small blue">
+                <span class="icon"><i class="mdi mdi-cog"></i></span>
+              </a>
+              <button class="button small red --jb-modal" data-target="sample-modal" type="button">
+                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="image-cell">
+            <div class="image">
+              <span class="icon"><i class="mdi mdi-tools mdi-24px text-green-500"></i></span>
+            </div>
+          </td>
+          <td data-label="Feature Name">
+            <a href="@Url.Action("Detail", "Features", new { featureName = "DevTools" })" class="has-text-link">DevTools</a>
+          </td>
+          <td data-label="Description">Developer tools and debugging utilities</td>
+          <td data-label="Status">
+            <span class="tag green">Active</span>
+          </td>
+          <td data-label="Category">Development</td>
+          <td data-label="Last Updated">
+            <small class="text-gray-500" title="Jan 12, 2025">Jan 12, 2025</small>
+          </td>
+          <td class="actions-cell">
+            <div class="buttons right nowrap">
+              <a href="@Url.Action("Detail", "Features", new { featureName = "DevTools" })" class="button small blue">
+                <span class="icon"><i class="mdi mdi-cog"></i></span>
+              </a>
+              <button class="button small red --jb-modal" data-target="sample-modal" type="button">
+                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="image-cell">
+            <div class="image">
+              <span class="icon"><i class="mdi mdi-database mdi-24px text-purple-500"></i></span>
+            </div>
+          </td>
+          <td data-label="Feature Name">
+            <a href="@Url.Action("Detail", "Features", new { featureName = "Database" })" class="has-text-link">Database Management</a>
+          </td>
+          <td data-label="Description">Database administration and monitoring tools</td>
+          <td data-label="Status">
+            <span class="tag green">Active</span>
+          </td>
+          <td data-label="Category">Data</td>
+          <td data-label="Last Updated">
+            <small class="text-gray-500" title="Jan 10, 2025">Jan 10, 2025</small>
+          </td>
+          <td class="actions-cell">
+            <div class="buttons right nowrap">
+              <a href="@Url.Action("Detail", "Features", new { featureName = "Database" })" class="button small blue">
+                <span class="icon"><i class="mdi mdi-cog"></i></span>
+              </a>
+              <button class="button small red --jb-modal" data-target="sample-modal" type="button">
+                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="image-cell">
+            <div class="image">
+              <span class="icon"><i class="mdi mdi-account-group mdi-24px text-orange-500"></i></span>
+            </div>
+          </td>
+          <td data-label="Feature Name">
+            <a href="@Url.Action("Detail", "Features", new { featureName = "UserManagement" })" class="has-text-link">User Management</a>
+          </td>
+          <td data-label="Description">User accounts, roles, and permissions management</td>
+          <td data-label="Status">
+            <span class="tag green">Active</span>
+          </td>
+          <td data-label="Category">Administration</td>
+          <td data-label="Last Updated">
+            <small class="text-gray-500" title="Jan 8, 2025">Jan 8, 2025</small>
+          </td>
+          <td class="actions-cell">
+            <div class="buttons right nowrap">
+              <a href="@Url.Action("Detail", "Features", new { featureName = "UserManagement" })" class="button small blue">
+                <span class="icon"><i class="mdi mdi-cog"></i></span>
+              </a>
+              <button class="button small red --jb-modal" data-target="sample-modal" type="button">
+                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="image-cell">
+            <div class="image">
+              <span class="icon"><i class="mdi mdi-chart-line mdi-24px text-red-500"></i></span>
+            </div>
+          </td>
+          <td data-label="Feature Name">
+            <a href="@Url.Action("Detail", "Features", new { featureName = "Analytics" })" class="has-text-link">Analytics</a>
+          </td>
+          <td data-label="Description">System analytics and reporting dashboard</td>
+          <td data-label="Status">
+            <span class="tag yellow">Pending</span>
+          </td>
+          <td data-label="Category">Reporting</td>
+          <td data-label="Last Updated">
+            <small class="text-gray-500" title="Jan 5, 2025">Jan 5, 2025</small>
+          </td>
+          <td class="actions-cell">
+            <div class="buttons right nowrap">
+              <a href="@Url.Action("Detail", "Features", new { featureName = "Analytics" })" class="button small blue">
+                <span class="icon"><i class="mdi mdi-cog"></i></span>
+              </a>
+              <button class="button small red --jb-modal" data-target="sample-modal" type="button">
+                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="image-cell">
+            <div class="image">
+              <span class="icon"><i class="mdi mdi-backup-restore mdi-24px text-indigo-500"></i></span>
+            </div>
+          </td>
+          <td data-label="Feature Name">
+            <a href="@Url.Action("Detail", "Features", new { featureName = "Backup" })" class="has-text-link">Backup & Restore</a>
+          </td>
+          <td data-label="Description">System backup and data recovery tools</td>
+          <td data-label="Status">
+            <span class="tag green">Active</span>
+          </td>
+          <td data-label="Category">System</td>
+          <td data-label="Last Updated">
+            <small class="text-gray-500" title="Jan 3, 2025">Jan 3, 2025</small>
+          </td>
+          <td class="actions-cell">
+            <div class="buttons right nowrap">
+              <a href="@Url.Action("Detail", "Features", new { featureName = "Backup" })" class="button small blue">
+                <span class="icon"><i class="mdi mdi-cog"></i></span>
+              </a>
+              <button class="button small red --jb-modal" data-target="sample-modal" type="button">
+                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="image-cell">
+            <div class="image">
+              <span class="icon"><i class="mdi mdi-bell mdi-24px text-pink-500"></i></span>
+            </div>
+          </td>
+          <td data-label="Feature Name">
+            <a href="@Url.Action("Detail", "Features", new { featureName = "Notifications" })" class="has-text-link">Notifications</a>
+          </td>
+          <td data-label="Description">System notification and alert management</td>
+          <td data-label="Status">
+            <span class="tag red">Disabled</span>
+          </td>
+          <td data-label="Category">Communication</td>
+          <td data-label="Last Updated">
+            <small class="text-gray-500" title="Dec 28, 2024">Dec 28, 2024</small>
+          </td>
+          <td class="actions-cell">
+            <div class="buttons right nowrap">
+              <a href="@Url.Action("Detail", "Features", new { featureName = "Notifications" })" class="button small blue">
+                <span class="icon"><i class="mdi mdi-cog"></i></span>
+              </a>
+              <button class="button small red --jb-modal" data-target="sample-modal" type="button">
+                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="table-pagination">
+        <div class="flex items-center justify-between">
+          <div class="buttons">
+            <button type="button" class="button active">1</button>
+            <button type="button" class="button">2</button>
+            <button type="button" class="button">3</button>
+          </div>
+          <small>Page 1 of 3</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sample Modal -->
+<div id="sample-modal" class="modal">
+  <div class="modal-background --jb-modal-close"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Delete Feature</p>
+    </header>
+    <section class="modal-card-body">
+      <p>Are you sure you want to delete this feature?</p>
+      <p><b>This action cannot be undone.</b></p>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button --jb-modal-close">Cancel</button>
+      <button class="button red --jb-modal-close">Delete</button>
+    </footer>
+  </div>
+</div> 

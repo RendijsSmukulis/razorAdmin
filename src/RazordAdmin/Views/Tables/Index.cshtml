@@ -1,0 +1,179 @@
+@{
+    ViewData["Title"] = "Tables";
+}
+
+<section class="is-title-bar">
+  <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+    <ul>
+      <li>Admin</li>
+      <li>Tables</li>
+    </ul>
+    <a href="https://github.com/justboil/admin-one-tailwind" target="_blank" class="button blue">
+      <span class="icon"><i class="mdi mdi-github-circle"></i></span>
+      <span>GitHub</span>
+    </a>
+  </div>
+</section>
+
+<section class="is-hero-bar">
+  <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+    <h1 class="title">
+      Tables
+    </h1>
+    <button class="button light">Button</button>
+  </div>
+</section>
+
+<section class="section main-section">
+  <div class="card has-table">
+    <header class="card-header">
+      <p class="card-header-title">
+        <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
+        Clients
+      </p>
+      <a href="#" class="card-header-icon">
+        <span class="icon"><i class="mdi mdi-reload"></i></span>
+      </a>
+    </header>
+    <div class="card-content">
+      <table>
+        <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Company</th>
+          <th>City</th>
+          <th>Progress</th>
+          <th>Created</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="image-cell">
+            <div class="image">
+              <img src="https://avatars.dicebear.com/v2/initials/rebecca-bauch.svg" class="rounded-full">
+            </div>
+          </td>
+          <td data-label="Name">Rebecca Bauch</td>
+          <td data-label="Company">Daugherty-Daniel</td>
+          <td data-label="City">South Cory</td>
+          <td data-label="Progress" class="progress-cell">
+            <progress max="100" value="79">79</progress>
+          </td>
+          <td data-label="Created">
+            <small class="text-gray-500" title="Oct 25, 2021">Oct 25, 2021</small>
+          </td>
+          <td class="actions-cell">
+            <div class="buttons right nowrap">
+              <button class="button small blue --jb-modal"  data-target="sample-modal-2" type="button">
+                <span class="icon"><i class="mdi mdi-eye"></i></span>
+              </button>
+              <button class="button small red --jb-modal" data-target="sample-modal" type="button">
+                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="image-cell">
+            <div class="image">
+              <img src="https://avatars.dicebear.com/v2/initials/felicita-yundt.svg" class="rounded-full">
+            </div>
+          </td>
+          <td data-label="Name">Felicita Yundt</td>
+          <td data-label="Company">Johns-Weissnat</td>
+          <td data-label="City">East Ariel</td>
+          <td data-label="Progress" class="progress-cell">
+            <progress max="100" value="67">67</progress>
+          </td>
+          <td data-label="Created">
+            <small class="text-gray-500" title="Jan 8, 2021">Jan 8, 2021</small>
+          </td>
+          <td class="actions-cell">
+            <div class="buttons right nowrap">
+              <button class="button small blue --jb-modal"  data-target="sample-modal-2" type="button">
+                <span class="icon"><i class="mdi mdi-eye"></i></span>
+              </button>
+              <button class="button small red --jb-modal" data-target="sample-modal" type="button">
+                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="image-cell">
+            <div class="image">
+              <img src="https://avatars.dicebear.com/v2/initials/lonzo-steuber.svg" class="rounded-full">
+            </div>
+          </td>
+          <td data-label="Name">Lonzo Steuber</td>
+          <td data-label="Company">Skiles Ltd</td>
+          <td data-label="City">Marilouville</td>
+          <td data-label="Progress" class="progress-cell">
+            <progress max="100" value="17">17</progress>
+          </td>
+          <td data-label="Created">
+            <small class="text-gray-500" title="Feb 12, 2021">Feb 12, 2021</small>
+          </td>
+          <td class="actions-cell">
+            <div class="buttons right nowrap">
+              <button class="button small blue --jb-modal"  data-target="sample-modal-2" type="button">
+                <span class="icon"><i class="mdi mdi-eye"></i></span>
+              </button>
+              <button class="button small red --jb-modal" data-target="sample-modal" type="button">
+                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="table-pagination">
+        <div class="flex items-center justify-between">
+          <div class="buttons">
+            <button type="button" class="button active">1</button>
+            <button type="button" class="button">2</button>
+            <button type="button" class="button">3</button>
+          </div>
+          <small>Page 1 of 3</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sample Modal -->
+<div id="sample-modal" class="modal">
+  <div class="modal-background --jb-modal-close"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Sample modal</p>
+    </header>
+    <section class="modal-card-body">
+      <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
+      <p>This is sample modal</p>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button --jb-modal-close">Cancel</button>
+      <button class="button red --jb-modal-close">Confirm</button>
+    </footer>
+  </div>
+</div>
+
+<div id="sample-modal-2" class="modal">
+  <div class="modal-background --jb-modal-close"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Sample modal</p>
+    </header>
+    <section class="modal-card-body">
+      <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
+      <p>This is sample modal</p>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button --jb-modal-close">Cancel</button>
+      <button class="button blue --jb-modal-close">Confirm</button>
+    </footer>
+  </div>
+</div> 
