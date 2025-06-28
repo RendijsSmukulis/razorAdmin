@@ -4,104 +4,123 @@
     ViewData["Title"] = "Features";
 }
 
-<div class="container-fluid">
-    <!-- Page Header -->
-    <div class="page-header">
-        <div class="row align-items-center">
-            <div class="col">
-                <h3 class="page-title">Features</h3>
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Features</li>
-                </ul>
-            </div>
-            <div class="col-auto float-end ms-auto">
-                <a href="#" class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_feature">
-                    <i class="fa fa-plus"></i> Add Feature
-                </a>
-            </div>
-        </div>
+<section class="is-title-bar">
+    <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+        <ul>
+            <li>Admin</li>
+            <li>Features</li>
+        </ul>
+        <a href="https://github.com/justboil/admin-one-tailwind" target="_blank" class="button blue">
+            <span class="icon"><i class="mdi mdi-github-circle"></i></span>
+            <span>GitHub</span>
+        </a>
     </div>
-    <!-- /Page Header -->
+</section>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-nowrap custom-table mb-0 datatable">
-                            <thead>
-                                <tr>
-                                    <th>Feature</th>
-                                    <th>Category</th>
-                                    <th>Status</th>
-                                    <th>Usage Count</th>
-                                    <th>Success Rate</th>
-                                    <th>Last Updated</th>
-                                    <th class="text-end">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var feature in Model)
-                                {
-                                    <tr>
-                                        <td>
-                                            <a href="@Url.Action("Detail", "Features", new { featureName = feature.Name })" class="d-flex align-items-center">
-                                                <span class="@feature.Icon"></span>
-                                                <div class="ms-3">
-                                                    <h6 class="mb-0">@feature.Name</h6>
-                                                    <small class="text-muted">@feature.Description</small>
-                                                </div>
-                                            </a>
-                                        </td>
-                                        <td>@feature.Category</td>
-                                        <td>
-                                            @{
-                                                var statusColor = feature.Status switch
-                                                {
-                                                    "Active" => "success",
-                                                    "Pending" => "warning",
-                                                    "Disabled" => "danger",
-                                                    _ => "secondary"
-                                                };
-                                            }
-                                            <span class="badge bg-@statusColor">@feature.Status</span>
-                                        </td>
-                                        <td>@feature.UsageCount.ToString("N0")</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <span class="me-2">@feature.SuccessRate%</span>
-                                                <div class="progress flex-1" style="height: 6px;">
-                                                    <div class="progress-bar bg-success" style="width: @feature.SuccessRate%"></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>@feature.LastUpdated.ToString("MMM dd, yyyy")</td>
-                                        <td class="text-end">
-                                            <div class="dropdown dropdown-action">
-                                                <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="material-icons">more_vert</i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="@Url.Action("Detail", "Features", new { featureName = feature.Name })">
-                                                        <i class="fa fa-eye m-r-5"></i> View
-                                                    </a>
-                                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#edit_feature">
-                                                        <i class="fa fa-pencil m-r-5"></i> Edit
-                                                    </a>
-                                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_feature">
-                                                        <i class="fa fa-trash-o m-r-5"></i> Delete
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+<section class="is-hero-bar">
+    <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+        <h1 class="title">
+            Features Management
+        </h1>
+        <button class="button light">Add Feature</button>
+    </div>
+</section>
+
+<section class="section main-section">
+    <div class="card has-table">
+        <header class="card-header">
+            <p class="card-header-title">
+                <span class="icon"><i class="mdi mdi-cog"></i></span>
+                System Features
+            </p>
+            <a href="#" class="card-header-icon">
+                <span class="icon"><i class="mdi mdi-reload"></i></span>
+            </a>
+        </header>
+        <div class="card-content">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Feature Name</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Category</th>
+                        <th>Last Updated</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var feature in Model)
+                    {
+                        <tr>
+                            <td class="image-cell">
+                                <div class="image">
+                                    <span class="icon"><i class="mdi mdi-shield-check mdi-24px text-blue-500"></i></span>
+                                </div>
+                            </td>
+                            <td data-label="Feature Name">
+                                <a href="@Url.Action("Detail", "Features", new { featureName = feature.Name })" class="has-text-link">@feature.Name</a>
+                            </td>
+                            <td data-label="Description">@feature.Description</td>
+                            <td data-label="Status">
+                                @{
+                                    var statusColor = feature.Status switch
+                                    {
+                                        "Active" => "success",
+                                        "Pending" => "warning",
+                                        "Disabled" => "danger",
+                                        _ => "secondary"
+                                    };
                                 }
-                            </tbody>
-                        </table>
+                                <span class="badge bg-@statusColor">@feature.Status</span>
+                            </td>
+                            <td data-label="Category">@feature.Category</td>
+                            <td data-label="Last Updated">
+                                <small class="text-gray-500">@feature.LastUpdated.ToString("MMM dd, yyyy")</small>
+                            </td>
+                            <td class="actions-cell">
+                                <div class="buttons right nowrap">
+                                    <a href="@Url.Action("Detail", "Features", new { featureName = feature.Name })" class="button small blue">
+                                        <span class="icon"><i class="mdi mdi-cog"></i></span>
+                                    </a>
+                                    <button class="button small red --jb-modal" data-target="sample-modal" type="button">
+                                        <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="table-pagination">
+                <div class="flex items-center justify-between">
+                    <div class="buttons">
+                        <button type="button" class="button active">1</button>
+                        <button type="button" class="button">2</button>
+                        <button type="button" class="button">3</button>
                     </div>
+                    <small>Page 1 of 3</small>
                 </div>
             </div>
         </div>
     </div>
-</div> 
+</section>
+
+<!-- Sample Modal -->
+<div id="sample-modal" class="modal">
+    <div class="modal-background --jb-modal-close"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Delete Feature</p>
+        </header>
+        <section class="modal-card-body">
+            <p>Are you sure you want to delete this feature?</p>
+            <p><b>This action cannot be undone.</b></p>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button --jb-modal-close">Cancel</button>
+            <button class="button red --jb-modal-close">Delete</button>
+        </footer>
+    </div>
+</div>
