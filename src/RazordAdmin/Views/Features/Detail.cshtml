@@ -1,173 +1,182 @@
-@model RazorAdmin.Models.FeatureDetailViewModel
+@model RazorAdmin.ViewModels.FeatureDetailViewModel
+
 @{
-    ViewData["Title"] = Model.FeatureName;
+    ViewData["Title"] = Model.Feature.Name;
 }
 
-<section class="is-title-bar">
-  <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
-    <ul>
-      <li><a href="@Url.Action("Index", "Features")">Features</a></li>
-      <li>@Model.FeatureName</li>
-    </ul>
-    <a href="https://github.com/justboil/admin-one-tailwind" target="_blank" class="button blue">
-      <span class="icon"><i class="mdi mdi-github-circle"></i></span>
-      <span>GitHub</span>
-    </a>
-  </div>
-</section>
-
-<section class="is-hero-bar">
-  <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
-    <h1 class="title">
-      @Model.FeatureName Management
-    </h1>
-    <div class="buttons">
-      <button class="button light">Settings</button>
-      <button class="button green">Save Changes</button>
-    </div>
-  </div>
-</section>
-
-<section class="section main-section">
-  <!-- Feature Status Card -->
-  <div class="card mb-6">
-    <header class="card-header">
-      <p class="card-header-title">
-        <span class="icon"><i class="@Model.FeatureIcon"></i></span>
-        Feature Status
-      </p>
-    </header>
-    <div class="card-content">
-      <div class="grid gap-6 grid-cols-1 md:grid-cols-3">
-        <div class="flex items-center justify-between">
-          <div>
-            <h3 class="text-lg font-semibold">Status</h3>
-            <span class="tag @Model.StatusColor">@Model.Status</span>
-          </div>
-        </div>
-        <div class="flex items-center justify-between">
-          <div>
-            <h3 class="text-lg font-semibold">Category</h3>
-            <p class="text-gray-600">@Model.Category</p>
-          </div>
-        </div>
-        <div class="flex items-center justify-between">
-          <div>
-            <h3 class="text-lg font-semibold">Last Updated</h3>
-            <p class="text-gray-600">@Model.LastUpdated</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Feature Configuration -->
-  <div class="card mb-6">
-    <header class="card-header">
-      <p class="card-header-title">
-        <span class="icon"><i class="mdi mdi-cog"></i></span>
-        Configuration
-      </p>
-    </header>
-    <div class="card-content">
-      <form method="post">
-        <div class="field">
-          <label class="label">Feature Name</label>
-          <div class="control">
-            <input class="input" type="text" value="@Model.FeatureName" readonly>
-          </div>
-        </div>
-
-        <div class="field">
-          <label class="label">Description</label>
-          <div class="control">
-            <textarea class="textarea" name="Description" placeholder="Feature description">@Model.Description</textarea>
-          </div>
-        </div>
-
-        <div class="field">
-          <label class="label">Status</label>
-          <div class="control">
-            <div class="select">
-              <select name="Status">
-                <option value="Active" selected="@(Model.Status == "Active")">Active</option>
-                <option value="Pending" selected="@(Model.Status == "Pending")">Pending</option>
-                <option value="Disabled" selected="@(Model.Status == "Disabled")">Disabled</option>
-              </select>
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">@Model.Feature.Name</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Features")">Features</a></li>
+                    <li class="breadcrumb-item active">@Model.Feature.Name</li>
+                </ul>
             </div>
-          </div>
-        </div>
-
-        <div class="field">
-          <label class="label">Category</label>
-          <div class="control">
-            <div class="select">
-              <select name="Category">
-                <option value="Security" selected="@(Model.Category == "Security")">Security</option>
-                <option value="Development" selected="@(Model.Category == "Development")">Development</option>
-                <option value="Data" selected="@(Model.Category == "Data")">Data</option>
-                <option value="Administration" selected="@(Model.Category == "Administration")">Administration</option>
-                <option value="Reporting" selected="@(Model.Category == "Reporting")">Reporting</option>
-                <option value="System" selected="@(Model.Category == "System")">System</option>
-                <option value="Communication" selected="@(Model.Category == "Communication")">Communication</option>
-              </select>
+            <div class="col-auto float-end ms-auto">
+                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit_feature">
+                    <i class="fa fa-pencil"></i> Edit Feature
+                </a>
             </div>
-          </div>
         </div>
-
-        <div class="field">
-          <label class="label">Enable Feature</label>
-          <div class="control">
-            <label class="checkbox">
-              <input type="checkbox" name="IsEnabled" @(Model.Status == "Active" ? "checked" : "")>
-              Enable this feature
-            </label>
-          </div>
-        </div>
-
-        <div class="field grouped">
-          <div class="control">
-            <button type="submit" class="button green">
-              Save Changes
-            </button>
-          </div>
-          <div class="control">
-            <a href="@Url.Action("Index", "Features")" class="button light">
-              Back to Features
-            </a>
-          </div>
-        </div>
-      </form>
     </div>
-  </div>
+    <!-- /Page Header -->
 
-  <!-- Feature Statistics -->
-  <div class="card">
-    <header class="card-header">
-      <p class="card-header-title">
-        <span class="icon"><i class="mdi mdi-chart-bar"></i></span>
-        Usage Statistics
-      </p>
-    </header>
-    <div class="card-content">
-      <div class="grid gap-6 grid-cols-1 md:grid-cols-4">
-        <div class="text-center">
-          <h3 class="text-2xl font-bold text-blue-600">@Model.UsageCount</h3>
-          <p class="text-gray-600">Total Usage</p>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Feature Details</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Feature Name</label>
+                                <input type="text" class="form-control" value="@Model.Feature.Name" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Category</label>
+                                <input type="text" class="form-control" value="@Model.Feature.Category" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" rows="3" readonly>@Model.Feature.Description</textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Status</label>
+                                @{
+                                    var statusColor = Model.Feature.Status switch
+                                    {
+                                        "Active" => "success",
+                                        "Pending" => "warning",
+                                        "Disabled" => "danger",
+                                        _ => "secondary"
+                                    };
+                                }
+                                <span class="badge bg-@statusColor fs-6">@Model.Feature.Status</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Last Updated</label>
+                                <input type="text" class="form-control" value="@Model.Feature.LastUpdated.ToString("MMM dd, yyyy HH:mm")" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Usage Statistics</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="stats-info">
+                                <h6>Total Usage</h6>
+                                <h4>@Model.Feature.UsageCount.ToString("N0")</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stats-info">
+                                <h6>Success Rate</h6>
+                                <h4>@Model.Feature.SuccessRate%</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stats-info">
+                                <h6>Error Count</h6>
+                                <h4>@Model.Feature.ErrorCount.ToString("N0")</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Success Rate Progress</label>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" style="width: @Model.Feature.SuccessRate%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="text-center">
-          <h3 class="text-2xl font-bold text-green-600">@Model.SuccessRate%</h3>
-          <p class="text-gray-600">Success Rate</p>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Feature Icon</h4>
+                </div>
+                <div class="card-body text-center">
+                    <div class="feature-icon-large">
+                        <span class="@Model.Feature.Icon" style="font-size: 4rem;"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Last Activity</h4>
+                </div>
+                <div class="card-body">
+                    @if (Model.Feature.LastUsed.HasValue)
+                    {
+                        <div class="activity-item">
+                            <div class="activity-content">
+                                <h6>Last Used</h6>
+                                <p>@Model.Feature.LastUsed.Value.ToString("MMM dd, yyyy HH:mm")</p>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="activity-item">
+                            <div class="activity-content">
+                                <h6>No Recent Activity</h6>
+                                <p>This feature hasn't been used yet.</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Related Features</h4>
+                </div>
+                <div class="card-body">
+                    <div class="related-features">
+                        @foreach (var relatedFeature in Model.RelatedFeatures.Take(5))
+                        {
+                            if (relatedFeature.Name != Model.Feature.Name)
+                            {
+                                <div class="related-feature-item">
+                                    <a href="@Url.Action("Detail", "Features", new { featureName = relatedFeature.Name })" class="d-flex align-items-center">
+                                        <span class="@relatedFeature.Icon"></span>
+                                        <div class="ms-3">
+                                            <h6 class="mb-0">@relatedFeature.Name</h6>
+                                            <small class="text-muted">@relatedFeature.Category</small>
+                                        </div>
+                                    </a>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="text-center">
-          <h3 class="text-2xl font-bold text-orange-600">@Model.ErrorCount</h3>
-          <p class="text-gray-600">Errors</p>
-        </div>
-        <div class="text-center">
-          <h3 class="text-2xl font-bold text-purple-600">@Model.LastUsed</h3>
-          <p class="text-gray-600">Last Used</p>
-        </div>
-      </div>
     </div>
-  </div>
-</section> 
+</div> 
