@@ -8,9 +8,11 @@ public interface IDatabaseService
 {
     Task<IEnumerable<Feature>> GetAllFeaturesAsync();
     Task<Feature?> GetFeatureByNameAsync(string featureName);
+    Task<Feature?> GetFeatureByIdAsync(int id);
     Task<int> CreateFeatureAsync(Feature feature);
     Task<bool> UpdateFeatureAsync(Feature feature);
     Task<bool> DeleteFeatureAsync(int id);
+    Task<bool> FeatureExistsAsync(string name, int? excludeId = null);
     Task InitializeDatabaseAsync();
 }
 
@@ -35,6 +37,14 @@ public class DatabaseService : IDatabaseService
         return await connection.QueryFirstOrDefaultAsync<Feature>(
             "SELECT * FROM Features WHERE Name = @FeatureName", 
             new { FeatureName = featureName });
+    }
+
+    public async Task<Feature?> GetFeatureByIdAsync(int id)
+    {
+        using var connection = new SqliteConnection(_connectionString);
+        return await connection.QueryFirstOrDefaultAsync<Feature>(
+            "SELECT * FROM Features WHERE Id = @Id", 
+            new { Id = id });
     }
 
     public async Task<int> CreateFeatureAsync(Feature feature)
@@ -67,6 +77,21 @@ public class DatabaseService : IDatabaseService
         using var connection = new SqliteConnection(_connectionString);
         var rowsAffected = await connection.ExecuteAsync("DELETE FROM Features WHERE Id = @Id", new { Id = id });
         return rowsAffected > 0;
+    }
+
+    public async Task<bool> FeatureExistsAsync(string name, int? excludeId = null)
+    {
+        using var connection = new SqliteConnection(_connectionString);
+        var sql = excludeId.HasValue 
+            ? "SELECT COUNT(*) FROM Features WHERE Name = @Name AND Id != @ExcludeId"
+            : "SELECT COUNT(*) FROM Features WHERE Name = @Name";
+        
+        object parameters = excludeId.HasValue 
+            ? new { Name = name, ExcludeId = excludeId.Value }
+            : new { Name = name };
+        
+        var count = await connection.ExecuteScalarAsync<int>(sql, parameters);
+        return count > 0;
     }
 
     public async Task InitializeDatabaseAsync()

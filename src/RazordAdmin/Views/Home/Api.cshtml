@@ -1,0 +1,351 @@
+@{
+    ViewData["Title"] = "API Documentation";
+}
+
+<section class="is-title-bar">
+  <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+    <ul>
+      <li>Admin</li>
+      <li>API Documentation</li>
+    </ul>
+    <a href="https://github.com/justboil/admin-one-tailwind" target="_blank" class="button blue">
+      <span class="icon"><i class="mdi mdi-github-circle"></i></span>
+      <span>GitHub</span>
+    </a>
+  </div>
+</section>
+
+<section class="is-hero-bar">
+  <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+    <h1 class="title">
+      Features API Documentation
+    </h1>
+    <div class="buttons">
+      <a href="/api/health" target="_blank" class="button green">
+        <span class="icon"><i class="mdi mdi-heart-pulse"></i></span>
+        <span>Health Check</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section main-section">
+  <div class="card">
+    <header class="card-header">
+      <p class="card-header-title">
+        <span class="icon"><i class="mdi mdi-api"></i></span>
+        REST API Endpoints
+      </p>
+    </header>
+    <div class="card-content">
+      <div class="content">
+        <h4>Base URL</h4>
+        <p><code>https://localhost:5001/api</code></p>
+        
+        <h4>Authentication</h4>
+        <p>Currently, the API does not require authentication. In production, consider implementing JWT tokens or API keys.</p>
+        
+        <h4>Response Format</h4>
+        <p>All endpoints return JSON responses in the following format:</p>
+        <pre><code>{
+  "success": true,
+  "message": "Operation completed successfully",
+  "data": { ... },
+  "errors": null
+}</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- GET /api/features -->
+  <div class="card mb-4">
+    <header class="card-header">
+      <p class="card-header-title">
+        <span class="method get">GET</span>
+        /api/features
+      </p>
+    </header>
+    <div class="card-content">
+      <div class="content">
+        <h5>Get All Features</h5>
+        <p>Retrieves a list of all features in the system.</p>
+        
+        <h6>Response</h6>
+        <pre><code>{
+  "success": true,
+  "message": "Features retrieved successfully",
+  "data": [
+    {
+      "id": 1,
+      "name": "AdBlock",
+      "description": "# Ad Block Feature...",
+      "status": "Active",
+      "category": "Security",
+      "icon": "mdi mdi-shield-check mdi-24px text-blue-500",
+      "lastUpdated": "2025-01-15T10:30:00Z",
+      "usageCount": 15420,
+      "successRate": 98,
+      "errorCount": 12,
+      "lastUsed": "2025-01-15T08:30:00Z"
+    }
+  ]
+}</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- GET /api/features/{id} -->
+  <div class="card mb-4">
+    <header class="card-header">
+      <p class="card-header-title">
+        <span class="method get">GET</span>
+        /api/features/{id}
+      </p>
+    </header>
+    <div class="card-content">
+      <div class="content">
+        <h5>Get Feature by ID</h5>
+        <p>Retrieves a specific feature by its ID.</p>
+        
+        <h6>Parameters</h6>
+        <ul>
+          <li><code>id</code> (integer, required) - The feature ID</li>
+        </ul>
+        
+        <h6>Response</h6>
+        <pre><code>{
+  "success": true,
+  "message": "Feature retrieved successfully",
+  "data": {
+    "id": 1,
+    "name": "AdBlock",
+    "description": "# Ad Block Feature...",
+    "status": "Active",
+    "category": "Security",
+    "icon": "mdi mdi-shield-check mdi-24px text-blue-500",
+    "lastUpdated": "2025-01-15T10:30:00Z",
+    "usageCount": 15420,
+    "successRate": 98,
+    "errorCount": 12,
+    "lastUsed": "2025-01-15T08:30:00Z"
+  }
+}</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- POST /api/features -->
+  <div class="card mb-4">
+    <header class="card-header">
+      <p class="card-header-title">
+        <span class="method post">POST</span>
+        /api/features
+      </p>
+    </header>
+    <div class="card-content">
+      <div class="content">
+        <h5>Create Feature</h5>
+        <p>Creates a new feature in the system.</p>
+        
+        <h6>Request Body</h6>
+        <pre><code>{
+  "name": "NewFeature",
+  "description": "# New Feature\n\nDescription with **Markdown** support.",
+  "status": "Active",
+  "category": "Development",
+  "icon": "mdi mdi-star mdi-24px text-yellow-500"
+}</code></pre>
+        
+        <h6>Response</h6>
+        <pre><code>{
+  "success": true,
+  "message": "Feature created successfully",
+  "data": {
+    "id": 8,
+    "name": "NewFeature",
+    "description": "# New Feature\n\nDescription with **Markdown** support.",
+    "status": "Active",
+    "category": "Development",
+    "icon": "mdi mdi-star mdi-24px text-yellow-500",
+    "lastUpdated": "2025-01-15T10:30:00Z",
+    "usageCount": 0,
+    "successRate": 0,
+    "errorCount": 0,
+    "lastUsed": null
+  }
+}</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- PUT /api/features/{id} -->
+  <div class="card mb-4">
+    <header class="card-header">
+      <p class="card-header-title">
+        <span class="method put">PUT</span>
+        /api/features/{id}
+      </p>
+    </header>
+    <div class="card-content">
+      <div class="content">
+        <h5>Update Feature</h5>
+        <p>Updates an existing feature. Only provided fields will be updated.</p>
+        
+        <h6>Parameters</h6>
+        <ul>
+          <li><code>id</code> (integer, required) - The feature ID</li>
+        </ul>
+        
+        <h6>Request Body</h6>
+        <pre><code>{
+  "description": "Updated description with **new content**.",
+  "status": "Pending"
+}</code></pre>
+        
+        <h6>Response</h6>
+        <pre><code>{
+  "success": true,
+  "message": "Feature updated successfully",
+  "data": {
+    "id": 1,
+    "name": "AdBlock",
+    "description": "Updated description with **new content**.",
+    "status": "Pending",
+    "category": "Security",
+    "icon": "mdi mdi-shield-check mdi-24px text-blue-500",
+    "lastUpdated": "2025-01-15T10:35:00Z",
+    "usageCount": 15420,
+    "successRate": 98,
+    "errorCount": 12,
+    "lastUsed": "2025-01-15T08:30:00Z"
+  }
+}</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- DELETE /api/features/{id} -->
+  <div class="card mb-4">
+    <header class="card-header">
+      <p class="card-header-title">
+        <span class="method delete">DELETE</span>
+        /api/features/{id}
+      </p>
+    </header>
+    <div class="card-content">
+      <div class="content">
+        <h5>Delete Feature</h5>
+        <p>Deletes a feature from the system.</p>
+        
+        <h6>Parameters</h6>
+        <ul>
+          <li><code>id</code> (integer, required) - The feature ID</li>
+        </ul>
+        
+        <h6>Response</h6>
+        <pre><code>{
+  "success": true,
+  "message": "Feature deleted successfully",
+  "data": null
+}</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error Responses -->
+  <div class="card">
+    <header class="card-header">
+      <p class="card-header-title">
+        <span class="icon"><i class="mdi mdi-alert-circle"></i></span>
+        Error Responses
+      </p>
+    </header>
+    <div class="card-content">
+      <div class="content">
+        <h5>Common Error Responses</h5>
+        
+        <h6>404 Not Found</h6>
+        <pre><code>{
+  "success": false,
+  "message": "Feature not found",
+  "data": null,
+  "errors": null
+}</code></pre>
+        
+        <h6>400 Bad Request (Validation Error)</h6>
+        <pre><code>{
+  "success": false,
+  "message": "Validation failed",
+  "data": null,
+  "errors": [
+    "The Name field is required.",
+    "The Status field is required."
+  ]
+}</code></pre>
+        
+        <h6>400 Bad Request (Duplicate Name)</h6>
+        <pre><code>{
+  "success": false,
+  "message": "Feature name already exists",
+  "data": null,
+  "errors": [
+    "A feature with this name already exists"
+  ]
+}</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.method {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-weight: bold;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  margin-right: 0.5rem;
+}
+
+.method.get {
+  background-color: #10b981;
+  color: white;
+}
+
+.method.post {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.method.put {
+  background-color: #f59e0b;
+  color: white;
+}
+
+.method.delete {
+  background-color: #ef4444;
+  color: white;
+}
+
+pre {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.875rem;
+}
+
+code {
+  background-color: #f1f3f4;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+</style> 
