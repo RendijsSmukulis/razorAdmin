@@ -5,8 +5,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RazorAdmin.Controllers;
 
+/// <summary>
+/// API controller for managing features in the RazorAdmin system.
+/// Provides CRUD operations for features with validation and error handling.
+/// </summary>
 [ApiController]
 [Route("api/[controller]")]
+[Produces("application/json")]
 public class FeaturesApiController : ControllerBase
 {
     private readonly IDatabaseService _db;
@@ -16,7 +21,15 @@ public class FeaturesApiController : ControllerBase
         _db = db;
     }
 
+    /// <summary>
+    /// Retrieves all features from the system.
+    /// </summary>
+    /// <returns>A list of all features with their details.</returns>
+    /// <response code="200">Returns the list of features.</response>
+    /// <response code="500">If there was an internal server error.</response>
     [HttpGet]
+    [ProducesResponseType(typeof(ApiResponse<IEnumerable<FeatureResponse>>), 200)]
+    [ProducesResponseType(500)]
     public async Task<ActionResult<ApiResponse<IEnumerable<FeatureResponse>>>> GetAll()
     {
         var features = await _db.GetAllFeaturesAsync();
@@ -29,7 +42,18 @@ public class FeaturesApiController : ControllerBase
         });
     }
 
+    /// <summary>
+    /// Retrieves a specific feature by its ID.
+    /// </summary>
+    /// <param name="id">The unique identifier of the feature.</param>
+    /// <returns>The feature details if found.</returns>
+    /// <response code="200">Returns the requested feature.</response>
+    /// <response code="404">If the feature with the specified ID was not found.</response>
+    /// <response code="500">If there was an internal server error.</response>
     [HttpGet("{id:int}")]
+    [ProducesResponseType(typeof(ApiResponse<FeatureResponse>), 200)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(500)]
     public async Task<ActionResult<ApiResponse<FeatureResponse>>> GetById(int id)
     {
         var feature = await _db.GetFeatureByIdAsync(id);
@@ -49,7 +73,18 @@ public class FeaturesApiController : ControllerBase
         });
     }
 
+    /// <summary>
+    /// Creates a new feature in the system.
+    /// </summary>
+    /// <param name="request">The feature creation request containing all required fields.</param>
+    /// <returns>The newly created feature with its assigned ID.</returns>
+    /// <response code="201">Returns the newly created feature.</response>
+    /// <response code="400">If the request data is invalid or feature name already exists.</response>
+    /// <response code="500">If there was an internal server error.</response>
     [HttpPost]
+    [ProducesResponseType(typeof(ApiResponse<FeatureResponse>), 201)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(500)]
     public async Task<ActionResult<ApiResponse<FeatureResponse>>> Create([FromBody] CreateFeatureRequest request)
     {
         // Validate request
@@ -85,7 +120,19 @@ public class FeaturesApiController : ControllerBase
         });
     }
 
+    /// <summary>
+    /// Updates an existing feature in the system.
+    /// </summary>
+    /// <param name="id">The unique identifier of the feature to update.</param>
+    /// <param name="request">The update request containing the fields to modify.</param>
+    /// <returns>The updated feature details.</returns>
+    /// <response code="200">Returns the updated feature.</response>
+    /// <response code="404">If the feature with the specified ID was not found.</response>
+    /// <response code="500">If there was an internal server error.</response>
     [HttpPut("{id:int}")]
+    [ProducesResponseType(typeof(ApiResponse<FeatureResponse>), 200)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(500)]
     public async Task<ActionResult<ApiResponse<FeatureResponse>>> Update(int id, [FromBody] UpdateFeatureRequest request)
     {
         var feature = await _db.GetFeatureByIdAsync(id);
@@ -112,7 +159,18 @@ public class FeaturesApiController : ControllerBase
         });
     }
 
+    /// <summary>
+    /// Deletes a feature from the system.
+    /// </summary>
+    /// <param name="id">The unique identifier of the feature to delete.</param>
+    /// <returns>A success message confirming the deletion.</returns>
+    /// <response code="200">Returns a success message.</response>
+    /// <response code="404">If the feature with the specified ID was not found.</response>
+    /// <response code="500">If there was an internal server error.</response>
     [HttpDelete("{id:int}")]
+    [ProducesResponseType(typeof(ApiResponse<object>), 200)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(500)]
     public async Task<ActionResult<ApiResponse<object>>> Delete(int id)
     {
         var feature = await _db.GetFeatureByIdAsync(id);
@@ -136,7 +194,13 @@ public class FeaturesApiController : ControllerBase
         });
     }
 
+    /// <summary>
+    /// Health check endpoint to verify the API is running.
+    /// </summary>
+    /// <returns>Health status and current timestamp.</returns>
+    /// <response code="200">Returns the health status.</response>
     [HttpGet("/api/health")]
+    [ProducesResponseType(200)]
     public IActionResult Health()
     {
         return Ok(new { Status = "Healthy", Timestamp = DateTime.UtcNow });
