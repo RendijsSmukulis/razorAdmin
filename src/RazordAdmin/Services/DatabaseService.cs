@@ -20,7 +20,7 @@ public class DatabaseService : IDatabaseService
 
     public DatabaseService(IConfiguration configuration)
     {
-        _connectionString = configuration.GetConnectionString("DefaultConnection") ?? "Data Source=razoradmin.db";
+        _connectionString = configuration.GetConnectionString("DefaultConnection") ?? "Data Source=razoradmin2.db";
     }
 
     public async Task<IEnumerable<Feature>> GetAllFeaturesAsync()
@@ -107,7 +107,7 @@ public class DatabaseService : IDatabaseService
             new Feature
             {
                 Name = "AdBlock",
-                Description = "Block unwanted advertisements and tracking scripts",
+                Description = "# Ad Block Feature\n\n**Blocks unwanted advertisements** and tracking scripts from loading on your system.\n\n## Features\n- *Real-time filtering*\n- `Custom filter lists`\n- **Performance optimized**\n\n> Provides enhanced privacy and faster browsing experience.",
                 Status = "Active",
                 Category = "Security",
                 Icon = "mdi mdi-shield-check mdi-24px text-blue-500",
@@ -120,7 +120,7 @@ public class DatabaseService : IDatabaseService
             new Feature
             {
                 Name = "DevTools",
-                Description = "Developer tools and debugging utilities",
+                Description = "# Developer Tools\n\nEssential **debugging utilities** and development aids.\n\n## Available Tools\n1. *Code Inspector*\n2. `Console Logger`\n3. **Performance Monitor**\n4. Network Analyzer\n\nSupports multiple programming languages and frameworks.",
                 Status = "Active",
                 Category = "Development",
                 Icon = "mdi mdi-tools mdi-24px text-green-500",
@@ -133,7 +133,7 @@ public class DatabaseService : IDatabaseService
             new Feature
             {
                 Name = "Database",
-                Description = "Database administration and monitoring tools",
+                Description = "# Database Management\n\n**Comprehensive database administration** and monitoring tools.\n\n## Capabilities\n- *Query Builder*\n- `Schema Management`\n- **Performance Tuning**\n- Backup & Recovery\n\n> Supports SQLite, MySQL, PostgreSQL, and MongoDB.",
                 Status = "Active",
                 Category = "Data",
                 Icon = "mdi mdi-database mdi-24px text-purple-500",
@@ -146,7 +146,7 @@ public class DatabaseService : IDatabaseService
             new Feature
             {
                 Name = "UserManagement",
-                Description = "User accounts, roles, and permissions management",
+                Description = "# User Management System\n\n**Complete user account management** with role-based access control.\n\n## Features\n- *User Registration*\n- `Role Assignment`\n- **Permission Management**\n- Audit Logging\n\nSupports LDAP integration and SSO authentication.",
                 Status = "Active",
                 Category = "Administration",
                 Icon = "mdi mdi-account-group mdi-24px text-orange-500",
@@ -159,7 +159,7 @@ public class DatabaseService : IDatabaseService
             new Feature
             {
                 Name = "Analytics",
-                Description = "System analytics and reporting dashboard",
+                Description = "# Analytics Dashboard\n\n**Advanced system analytics** and reporting capabilities.\n\n## Metrics Tracked\n- *User Activity*\n- `System Performance`\n- **Error Rates**\n- Resource Usage\n\n> Real-time data visualization with customizable reports.",
                 Status = "Pending",
                 Category = "Reporting",
                 Icon = "mdi mdi-chart-line mdi-24px text-red-500",
@@ -172,7 +172,7 @@ public class DatabaseService : IDatabaseService
             new Feature
             {
                 Name = "Backup",
-                Description = "System backup and data recovery tools",
+                Description = "# Backup & Restore\n\n**Automated backup system** with data recovery capabilities.\n\n## Backup Types\n1. *Full System Backup*\n2. `Incremental Backup`\n3. **Differential Backup**\n4. File-level Backup\n\nSupports cloud storage integration and encryption.",
                 Status = "Active",
                 Category = "System",
                 Icon = "mdi mdi-backup-restore mdi-24px text-indigo-500",
@@ -185,7 +185,7 @@ public class DatabaseService : IDatabaseService
             new Feature
             {
                 Name = "Notifications",
-                Description = "System notification and alert management",
+                Description = "# Notification System\n\n**Comprehensive notification management** for system alerts and user communications.\n\n## Notification Channels\n- *Email Notifications*\n- `SMS Alerts`\n- **Push Notifications**\n- Webhook Integration\n\n> Customizable templates and delivery schedules.",
                 Status = "Disabled",
                 Category = "Communication",
                 Icon = "mdi mdi-bell mdi-24px text-pink-500",

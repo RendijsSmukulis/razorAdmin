@@ -8,6 +8,9 @@ builder.Services.AddControllersWithViews();
 // Add database service
 builder.Services.AddScoped<IDatabaseService, DatabaseService>();
 
+// Add Markdown service
+builder.Services.AddSingleton<IMarkdownService, MarkdownService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

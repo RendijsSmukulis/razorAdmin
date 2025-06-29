@@ -1,4 +1,5 @@
 @model RazorAdmin.ViewModels.FeatureDetailViewModel
+@inject RazorAdmin.Services.IMarkdownService MarkdownService
 
 @{
     ViewData["Title"] = Model.Feature.Name;
@@ -33,7 +34,7 @@
     <div class="card mb-6">
         <header class="card-header">
             <p class="card-header-title">
-                <span class="icon"><i class="@Model.Feature.Name"></i></span>
+                <span class="@Model.Feature.Icon"></span>
                 Feature Status
             </p>
         </header>
@@ -54,7 +55,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <h3 class="text-lg font-semibold">Last Updated</h3>
-                        <p class="text-gray-600">@Model.Feature.LastUpdated</p>
+                        <p class="text-gray-600">@Model.Feature.LastUpdated.ToString("MMM dd, yyyy HH:mm")</p>
                     </div>
                 </div>
             </div>
@@ -79,9 +80,23 @@
                 </div>
 
                 <div class="field">
-                    <label class="label">Description</label>
+                    <label class="label">
+                        Description 
+                        <span class="has-text-grey-light">(Supports Markdown)</span>
+                    </label>
                     <div class="control">
-                        <textarea class="textarea" name="Description" placeholder="Feature description">@Model.Feature.Description</textarea>
+                        <div id="description-edit-mode" style="display: none;">
+                            <textarea class="textarea" name="Description" id="description-textarea" 
+                                      placeholder="Feature description (Markdown supported)&#10;&#10;Examples:&#10;# Heading&#10;**Bold text**&#10;*Italic text*&#10;`code`&#10;- List item">@Model.Feature.Description</textarea>
+                            <div class="help-text">
+                                <strong>Markdown supported:</strong> Headers (# ## ###), **bold**, *italic*, `code`, lists (- *), links, and more.
+                            </div>
+                        </div>
+                        <div id="description-view-mode">
+                            <div class="markdown-content">
+                                @Html.Raw(MarkdownService.RenderToHtml(Model.Feature.Description))
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -164,7 +179,9 @@
                     <p class="text-gray-600">Errors</p>
                 </div>
                 <div class="text-center">
-                    <h3 class="text-2xl font-bold text-purple-600">@Model.Feature.LastUsed</h3>
+                    <h3 class="text-2xl font-bold text-purple-600">
+                        @(Model.Feature.LastUsed?.ToString("MMM dd, yyyy") ?? "Never")
+                    </h3>
                     <p class="text-gray-600">Last Used</p>
                 </div>
             </div>

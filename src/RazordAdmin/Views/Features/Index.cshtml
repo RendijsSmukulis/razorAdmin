@@ -1,4 +1,5 @@
 @model IEnumerable<RazorAdmin.Models.Feature>
+@inject RazorAdmin.Services.IMarkdownService MarkdownService
 
 @{
     ViewData["Title"] = "Features";
@@ -56,13 +57,25 @@
                         <tr>
                             <td class="image-cell">
                                 <div class="image">
-                                    <span class="icon"><i class="mdi mdi-shield-check mdi-24px text-blue-500"></i></span>
+                                    <span class="@feature.Icon"></span>
                                 </div>
                             </td>
                             <td data-label="Feature Name">
                                 <a href="@Url.Action("Detail", "Features", new { featureName = feature.Name })" class="has-text-link">@feature.Name</a>
                             </td>
-                            <td data-label="Description">@feature.Description</td>
+                            <td data-label="Description">
+                                <div class="description-cell">
+                                    <div class="description-preview">
+                                        @{
+                                            var descriptionPreview = feature.Description.Length > 100 
+                                                ? feature.Description.Substring(0, 100) + "..." 
+                                                : feature.Description;
+                                            var htmlPreview = MarkdownService.RenderToHtml(descriptionPreview);
+                                        }
+                                        @Html.Raw(htmlPreview)
+                                    </div>
+                                </div>
+                            </td>
                             <td data-label="Status">
                                 @{
                                     var statusColor = feature.Status switch
