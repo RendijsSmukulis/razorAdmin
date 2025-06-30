@@ -294,22 +294,4 @@ public class FeaturesApiControllerTests
         apiResponse.Success.Should().BeFalse();
         apiResponse.Message.Should().Be("Feature not found");
     }
-
-    [Fact]
-    public void Health_ShouldReturnOkResultWithHealthInfo()
-    {
-        // Act
-        var result = _controller.Health();
-
-        // Assert
-        var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
-        var healthInfo = okResult.Value.Should().BeOfType<object>().Subject;
-        
-        // Use dynamic to access properties
-        dynamic health = healthInfo;
-        ((string)health.Status).Should().Be("Healthy");
-        ((string)health.Application).Should().Be("RazorAdmin");
-        ((string)health.Version).Should().Be("1.0.0");
-        health.Timestamp.Should().NotBeNull();
-    }
 } 

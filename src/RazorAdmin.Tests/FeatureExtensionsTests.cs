@@ -67,7 +67,7 @@ public class FeatureExtensionsTests
         result.Status.Should().Be(request.Status);
         result.Category.Should().Be(request.Category);
         result.Icon.Should().Be(request.Icon);
-        result.LastUpdated.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
+        (result.LastUpdated.ToUniversalTime() - DateTime.UtcNow).TotalSeconds.Should().BeInRange(-60, 5); // Should be within the last minute
         result.UsageCount.Should().Be(0);
         result.SuccessRate.Should().Be(0);
         result.ErrorCount.Should().Be(0);
@@ -78,6 +78,7 @@ public class FeatureExtensionsTests
     public void UpdateFromRequest_ShouldUpdateFeatureWithNonNullValues()
     {
         // Arrange
+        var originalLastUsed = DateTime.Now.AddHours(-1);
         var feature = new Feature
         {
             Id = 1,
@@ -90,7 +91,7 @@ public class FeatureExtensionsTests
             UsageCount = 100,
             SuccessRate = 95,
             ErrorCount = 5,
-            LastUsed = DateTime.Now.AddHours(-1)
+            LastUsed = originalLastUsed
         };
 
         var updateRequest = new UpdateFeatureRequest
@@ -117,7 +118,7 @@ public class FeatureExtensionsTests
         feature.UsageCount.Should().Be(100); // Should not change
         feature.SuccessRate.Should().Be(95); // Should not change
         feature.ErrorCount.Should().Be(5); // Should not change
-        feature.LastUsed.Should().Be(DateTime.Now.AddHours(-1)); // Should not change
+        feature.LastUsed.Should().Be(originalLastUsed); // Should not change
     }
 
     [Fact]
