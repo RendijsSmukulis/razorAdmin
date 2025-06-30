@@ -1,12 +1,22 @@
 using RazorAdmin.Services;
+using RazorAdmin.Repositories;
+using RazorAdmin.Configuration;
+using RazorAdmin.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Add database service
-builder.Services.AddScoped<IDatabaseService, DatabaseService>();
+// Configure strongly-typed settings
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+
+// Add repositories
+builder.Services.AddScoped<IFeatureRepository, FeatureRepository>();
+
+// Add services
+builder.Services.AddScoped<IFeatureService, FeatureService>();
+builder.Services.AddScoped<IDatabaseInitializationService, DatabaseInitializationService>();
 
 // Add Markdown service
 builder.Services.AddSingleton<IMarkdownService, MarkdownService>();
@@ -54,6 +64,9 @@ else
     app.UseHsts();
 }
 
+// Add global exception handler
+app.UseMiddleware<GlobalExceptionHandler>();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -68,8 +81,8 @@ app.MapControllerRoute(
 // Initialize database
 using (var scope = app.Services.CreateScope())
 {
-    var databaseService = scope.ServiceProvider.GetRequiredService<IDatabaseService>();
-    await databaseService.InitializeDatabaseAsync();
+    var databaseInitializationService = scope.ServiceProvider.GetRequiredService<IDatabaseInitializationService>();
+    await databaseInitializationService.InitializeDatabaseAsync();
 }
 
 app.Run();

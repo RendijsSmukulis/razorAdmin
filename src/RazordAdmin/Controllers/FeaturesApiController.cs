@@ -14,11 +14,13 @@ namespace RazorAdmin.Controllers;
 [Produces("application/json")]
 public class FeaturesApiController : ControllerBase
 {
-    private readonly IDatabaseService _db;
+    private readonly IFeatureService _featureService;
+    private readonly ILogger<FeaturesApiController> _logger;
 
-    public FeaturesApiController(IDatabaseService db)
+    public FeaturesApiController(IFeatureService featureService, ILogger<FeaturesApiController> logger)
     {
-        _db = db;
+        _featureService = featureService;
+        _logger = logger;
     }
 
     /// <summary>
@@ -32,14 +34,26 @@ public class FeaturesApiController : ControllerBase
     [ProducesResponseType(500)]
     public async Task<ActionResult<ApiResponse<IEnumerable<FeatureResponse>>>> GetAll()
     {
-        var features = await _db.GetAllFeaturesAsync();
-        var responses = features.Select(f => f.ToResponse());
-        return Ok(new ApiResponse<IEnumerable<FeatureResponse>>
+        try
         {
-            Success = true,
-            Data = responses,
-            Message = "Features retrieved successfully"
-        });
+            var features = await _featureService.GetAllFeaturesAsync();
+            var responses = features.Select(f => f.ToResponse());
+            return Ok(new ApiResponse<IEnumerable<FeatureResponse>>
+            {
+                Success = true,
+                Data = responses,
+                Message = "Features retrieved successfully"
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving all features");
+            return StatusCode(500, new ApiResponse<IEnumerable<FeatureResponse>>
+            {
+                Success = false,
+                Message = "An error occurred while retrieving features"
+            });
+        }
     }
 
     /// <summary>
@@ -56,21 +70,33 @@ public class FeaturesApiController : ControllerBase
     [ProducesResponseType(500)]
     public async Task<ActionResult<ApiResponse<FeatureResponse>>> GetById(int id)
     {
-        var feature = await _db.GetFeatureByIdAsync(id);
-        if (feature == null)
+        try
         {
-            return NotFound(new ApiResponse<FeatureResponse>
+            var feature = await _featureService.GetFeatureByIdAsync(id);
+            if (feature == null)
             {
-                Success = false,
-                Message = "Feature not found"
+                return NotFound(new ApiResponse<FeatureResponse>
+                {
+                    Success = false,
+                    Message = "Feature not found"
+                });
+            }
+            return Ok(new ApiResponse<FeatureResponse>
+            {
+                Success = true,
+                Data = feature.ToResponse(),
+                Message = "Feature retrieved successfully"
             });
         }
-        return Ok(new ApiResponse<FeatureResponse>
+        catch (Exception ex)
         {
-            Success = true,
-            Data = feature.ToResponse(),
-            Message = "Feature retrieved successfully"
-        });
+            _logger.LogError(ex, "Error retrieving feature with ID {FeatureId}", id);
+            return StatusCode(500, new ApiResponse<FeatureResponse>
+            {
+                Success = false,
+                Message = "An error occurred while retrieving the feature"
+            });
+        }
     }
 
     /// <summary>
@@ -87,37 +113,42 @@ public class FeaturesApiController : ControllerBase
     [ProducesResponseType(500)]
     public async Task<ActionResult<ApiResponse<FeatureResponse>>> Create([FromBody] CreateFeatureRequest request)
     {
-        // Validate request
-        var validationResults = new List<ValidationResult>();
-        var validationContext = new ValidationContext(request);
-        if (!Validator.TryValidateObject(request, validationContext, validationResults, true))
+        try
+        {
+            var feature = await _featureService.CreateFeatureAsync(request);
+            return CreatedAtAction(nameof(GetById), new { id = feature.Id }, new ApiResponse<FeatureResponse>
+            {
+                Success = true,
+                Data = feature.ToResponse(),
+                Message = "Feature created successfully"
+            });
+        }
+        catch (ValidationException ex)
         {
             return BadRequest(new ApiResponse<FeatureResponse>
             {
                 Success = false,
                 Message = "Validation failed",
-                Errors = validationResults.Select(v => v.ErrorMessage).Where(e => e != null).ToList()!
+                Errors = new List<string> { ex.Message }
             });
         }
-        // Check if feature name already exists
-        if (await _db.FeatureExistsAsync(request.Name))
+        catch (InvalidOperationException ex)
         {
             return BadRequest(new ApiResponse<FeatureResponse>
             {
                 Success = false,
-                Message = "Feature name already exists",
-                Errors = new List<string> { "A feature with this name already exists" }
+                Message = ex.Message
             });
         }
-        var feature = request.ToEntity();
-        var id = await _db.CreateFeatureAsync(feature);
-        var createdFeature = await _db.GetFeatureByIdAsync(id);
-        return CreatedAtAction(nameof(GetById), new { id }, new ApiResponse<FeatureResponse>
+        catch (Exception ex)
         {
-            Success = true,
-            Data = createdFeature!.ToResponse(),
-            Message = "Feature created successfully"
-        });
+            _logger.LogError(ex, "Error creating feature '{FeatureName}'", request.Name);
+            return StatusCode(500, new ApiResponse<FeatureResponse>
+            {
+                Success = false,
+                Message = "An error occurred while creating the feature"
+            });
+        }
     }
 
     /// <summary>
@@ -135,28 +166,33 @@ public class FeaturesApiController : ControllerBase
     [ProducesResponseType(500)]
     public async Task<ActionResult<ApiResponse<FeatureResponse>>> Update(int id, [FromBody] UpdateFeatureRequest request)
     {
-        var feature = await _db.GetFeatureByIdAsync(id);
-        if (feature == null)
+        try
+        {
+            var feature = await _featureService.UpdateFeatureAsync(id, request);
+            return Ok(new ApiResponse<FeatureResponse>
+            {
+                Success = true,
+                Data = feature.ToResponse(),
+                Message = "Feature updated successfully"
+            });
+        }
+        catch (InvalidOperationException ex)
         {
             return NotFound(new ApiResponse<FeatureResponse>
             {
                 Success = false,
-                Message = "Feature not found"
+                Message = ex.Message
             });
         }
-        feature.UpdateFromRequest(request);
-        var success = await _db.UpdateFeatureAsync(feature);
-        if (!success)
+        catch (Exception ex)
         {
-            return Problem("Failed to update feature");
+            _logger.LogError(ex, "Error updating feature with ID {FeatureId}", id);
+            return StatusCode(500, new ApiResponse<FeatureResponse>
+            {
+                Success = false,
+                Message = "An error occurred while updating the feature"
+            });
         }
-        var updatedFeature = await _db.GetFeatureByIdAsync(id);
-        return Ok(new ApiResponse<FeatureResponse>
-        {
-            Success = true,
-            Data = updatedFeature!.ToResponse(),
-            Message = "Feature updated successfully"
-        });
     }
 
     /// <summary>
@@ -173,36 +209,48 @@ public class FeaturesApiController : ControllerBase
     [ProducesResponseType(500)]
     public async Task<ActionResult<ApiResponse<object>>> Delete(int id)
     {
-        var feature = await _db.GetFeatureByIdAsync(id);
-        if (feature == null)
+        try
         {
-            return NotFound(new ApiResponse<object>
+            var success = await _featureService.DeleteFeatureAsync(id);
+            if (!success)
             {
-                Success = false,
-                Message = "Feature not found"
+                return NotFound(new ApiResponse<object>
+                {
+                    Success = false,
+                    Message = "Feature not found"
+                });
+            }
+            return Ok(new ApiResponse<object>
+            {
+                Success = true,
+                Message = "Feature deleted successfully"
             });
         }
-        var success = await _db.DeleteFeatureAsync(id);
-        if (!success)
+        catch (Exception ex)
         {
-            return Problem("Failed to delete feature");
+            _logger.LogError(ex, "Error deleting feature with ID {FeatureId}", id);
+            return StatusCode(500, new ApiResponse<object>
+            {
+                Success = false,
+                Message = "An error occurred while deleting the feature"
+            });
         }
-        return Ok(new ApiResponse<object>
-        {
-            Success = true,
-            Message = "Feature deleted successfully"
-        });
     }
 
     /// <summary>
     /// Health check endpoint to verify the API is running.
     /// </summary>
     /// <returns>Health status and current timestamp.</returns>
-    /// <response code="200">Returns the health status.</response>
+    /// <response code="200">Returns health status.</response>
     [HttpGet("/api/health")]
     [ProducesResponseType(200)]
     public IActionResult Health()
     {
-        return Ok(new { Status = "Healthy", Timestamp = DateTime.UtcNow });
+        return Ok(new
+        {
+            Status = "Healthy",
+            Timestamp = DateTime.UtcNow,
+            Version = "1.0.0"
+        });
     }
 } 

@@ -7,22 +7,22 @@ namespace RazorAdmin.Controllers;
 
 public class FeaturesController : Controller
 {
-    private readonly IDatabaseService _databaseService;
+    private readonly IFeatureService _featureService;
 
-    public FeaturesController(IDatabaseService databaseService)
+    public FeaturesController(IFeatureService featureService)
     {
-        _databaseService = databaseService;
+        _featureService = featureService;
     }
 
     public async Task<IActionResult> Index()
     {
-        var features = await _databaseService.GetAllFeaturesAsync();
+        var features = await _featureService.GetAllFeaturesAsync();
         return View(features);
     }
 
     public async Task<IActionResult> Detail(string featureName)
     {
-        var feature = await _databaseService.GetFeatureByNameAsync(featureName);
+        var feature = await _featureService.GetFeatureByNameAsync(featureName);
         
         if (feature == null)
         {
@@ -32,7 +32,7 @@ public class FeaturesController : Controller
         var viewModel = new FeatureDetailViewModel
         {
             Feature = feature,
-            RelatedFeatures = await _databaseService.GetAllFeaturesAsync()
+            RelatedFeatures = await _featureService.GetAllFeaturesAsync()
         };
 
         return View(viewModel);
