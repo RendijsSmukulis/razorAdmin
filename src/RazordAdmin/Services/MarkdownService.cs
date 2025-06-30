@@ -10,16 +10,13 @@ public interface IMarkdownService
 
 public class MarkdownService : IMarkdownService
 {
-    private readonly MarkdownPipeline _pipeline;
+    private readonly MarkdownPipeline _pipeline = new MarkdownPipelineBuilder()
+        .UseAdvancedExtensions()
+        .DisableHtml() // Disable raw HTML for security
+        .Build();
 
-    public MarkdownService()
-    {
-        // Configure Markdig pipeline with security features
-        _pipeline = new MarkdownPipelineBuilder()
-            .UseAdvancedExtensions()
-            .DisableHtml() // Disable raw HTML for security
-            .Build();
-    }
+    // Configure Markdig pipeline with security features
+    // Disable raw HTML for security
 
     public string RenderToHtml(string markdown)
     {

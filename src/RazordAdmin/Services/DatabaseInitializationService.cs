@@ -1,6 +1,5 @@
 using Microsoft.Data.Sqlite;
 using RazorAdmin.Models;
-using RazorAdmin.Repositories;
 using Dapper;
 
 namespace RazorAdmin.Services;

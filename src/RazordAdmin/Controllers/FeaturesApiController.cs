@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using RazorAdmin.Models;
 using RazorAdmin.Services;
+using RazorAdmin.Configuration;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.Options;
 
 namespace RazorAdmin.Controllers;
 
@@ -16,11 +18,13 @@ public class FeaturesApiController : ControllerBase
 {
     private readonly IFeatureService _featureService;
     private readonly ILogger<FeaturesApiController> _logger;
+    private readonly AppSettings _appSettings;
 
-    public FeaturesApiController(IFeatureService featureService, ILogger<FeaturesApiController> logger)
+    public FeaturesApiController(IFeatureService featureService, ILogger<FeaturesApiController> logger, IOptions<AppSettings> appSettings)
     {
         _featureService = featureService;
         _logger = logger;
+        _appSettings = appSettings.Value;
     }
 
     /// <summary>
@@ -249,8 +253,9 @@ public class FeaturesApiController : ControllerBase
         return Ok(new
         {
             Status = "Healthy",
-            Timestamp = DateTime.UtcNow,
-            Version = "1.0.0"
+            Application = _appSettings.ApplicationName,
+            Version = _appSettings.Version,
+            Timestamp = DateTime.UtcNow
         });
     }
 } 
