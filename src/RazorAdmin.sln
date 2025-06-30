@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorAdmin", "RazordAdmin\R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorAdmin.Data", "RazorAdmin.Data\RazorAdmin.Data.csproj", "{E35D538E-043D-4F49-A229-BE5844641E8D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorAdmin.Tests", "RazorAdmin.Tests\RazorAdmin.Tests.csproj", "{1289A61C-CE19-42BA-BB85-C1F18073E864}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,18 @@ Global
 		{E35D538E-043D-4F49-A229-BE5844641E8D}.Release|x64.Build.0 = Release|Any CPU
 		{E35D538E-043D-4F49-A229-BE5844641E8D}.Release|x86.ActiveCfg = Release|Any CPU
 		{E35D538E-043D-4F49-A229-BE5844641E8D}.Release|x86.Build.0 = Release|Any CPU
+		{1289A61C-CE19-42BA-BB85-C1F18073E864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1289A61C-CE19-42BA-BB85-C1F18073E864}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1289A61C-CE19-42BA-BB85-C1F18073E864}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1289A61C-CE19-42BA-BB85-C1F18073E864}.Debug|x64.Build.0 = Debug|Any CPU
+		{1289A61C-CE19-42BA-BB85-C1F18073E864}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1289A61C-CE19-42BA-BB85-C1F18073E864}.Debug|x86.Build.0 = Debug|Any CPU
+		{1289A61C-CE19-42BA-BB85-C1F18073E864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1289A61C-CE19-42BA-BB85-C1F18073E864}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1289A61C-CE19-42BA-BB85-C1F18073E864}.Release|x64.ActiveCfg = Release|Any CPU
+		{1289A61C-CE19-42BA-BB85-C1F18073E864}.Release|x64.Build.0 = Release|Any CPU
+		{1289A61C-CE19-42BA-BB85-C1F18073E864}.Release|x86.ActiveCfg = Release|Any CPU
+		{1289A61C-CE19-42BA-BB85-C1F18073E864}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
